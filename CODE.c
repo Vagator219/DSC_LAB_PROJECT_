@@ -1,14 +1,3 @@
-/*
- * ============================================================
- *  Student Academic Performance & CGPA Tracker  v2
- *  1st Year C Mini Project
- * ============================================================
- *  FLOW:
- *   Phase 1 — Ask N, input all N students at once
- *   Phase 2 — Post-input menu (add/edit/search/rank/backlog)
- * ============================================================
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,7 +7,6 @@
 #define MAX_SUBJECTS  8
 #define BACKLOG_MIN  4.0f
 
-/* ── Student node (linked list) ─────────────────────────── */
 typedef struct Student {
     char  name[MAX_NAME];
     char  rollNo[MAX_ROLL];
@@ -29,11 +17,7 @@ typedef struct Student {
     struct Student *next;
 } Student;
 
-Student *head = NULL;   /* global head pointer */
-
-/* ════════════════════════════════════════════════════════
- *  UTILITIES
- * ════════════════════════════════════════════════════════ */
+Student *head = NULL;  
 
 void clearBuf(void) {
     int c;
@@ -65,9 +49,6 @@ void divider(void) {
     printf("  ----------------------------------------\n");
 }
 
-/* ════════════════════════════════════════════════════════
- *  INPUT: fill one student record (shared by Phase-1 & add)
- * ════════════════════════════════════════════════════════ */
 void fillStudent(Student *s) {
     printf("  Name     : ");
     fgets(s->name, MAX_NAME, stdin);
@@ -98,9 +79,6 @@ void fillStudent(Student *s) {
     printf("  => CGPA calculated: %.2f\n", s->cgpa);
 }
 
-/* ════════════════════════════════════════════════════════
- *  PHASE 1: Input N students
- * ════════════════════════════════════════════════════════ */
 void inputNStudents(void) {
     int n, i;
     printf("\n  How many students to enter? ");
@@ -119,10 +97,6 @@ void inputNStudents(void) {
 
     printf("\n  All %d students entered successfully.\n", n);
 }
-
-/* ════════════════════════════════════════════════════════
- *  MENU OPTION 1: Add more students
- * ════════════════════════════════════════════════════════ */
 void menuAdd(void) {
     int n, i;
     printf("\n  How many students to add? ");
@@ -139,9 +113,6 @@ void menuAdd(void) {
     printf("  %d student(s) added.\n", n);
 }
 
-/* ════════════════════════════════════════════════════════
- *  MENU OPTION 2: Display all students
- * ════════════════════════════════════════════════════════ */
 void menuDisplay(void) {
     if (!head) { printf("\n  No students in system.\n"); return; }
 
@@ -161,9 +132,6 @@ void menuDisplay(void) {
     printf("  Total: %d student(s)\n", n - 1);
 }
 
-/* ════════════════════════════════════════════════════════
- *  MENU OPTION 3: Search by roll number
- * ════════════════════════════════════════════════════════ */
 void menuSearch(void) {
     if (!head) { printf("\n  No students in system.\n"); return; }
 
@@ -196,9 +164,6 @@ void menuSearch(void) {
     printf("  Roll No '%s' not found.\n", q);
 }
 
-/* ════════════════════════════════════════════════════════
- *  MENU OPTION 4: Edit / update marks of a student
- * ════════════════════════════════════════════════════════ */
 void menuEdit(void) {
     if (!head) { printf("\n  No students to edit.\n"); return; }
 
@@ -232,10 +197,6 @@ void menuEdit(void) {
     printf("  Roll No '%s' not found.\n", q);
 }
 
-/* ════════════════════════════════════════════════════════
- *  MENU OPTION 5: Show class rankings / topper
- *  Uses bubble sort on a temporary pointer array
- * ════════════════════════════════════════════════════════ */
 void menuToppers(void) {
     if (!head) { printf("\n  No students.\n"); return; }
 
@@ -283,9 +244,6 @@ void menuToppers(void) {
     free(arr);
 }
 
-/* ════════════════════════════════════════════════════════
- *  MENU OPTION 6: Show backlog students (cgpa < threshold)
- * ════════════════════════════════════════════════════════ */
 void menuBacklogs(void) {
     if (!head) { printf("\n  No students.\n"); return; }
 
@@ -311,9 +269,6 @@ void menuBacklogs(void) {
     divider();
 }
 
-/* ════════════════════════════════════════════════════════
- *  Free entire linked list
- * ════════════════════════════════════════════════════════ */
 void freeAll(void) {
     Student *cur = head;
     while (cur) {
@@ -323,19 +278,12 @@ void freeAll(void) {
     }
     head = NULL;
 }
-
-/* ════════════════════════════════════════════════════════
- *  MAIN
- * ════════════════════════════════════════════════════════ */
 int main(void) {
     printf("\n  =========================================\n");
     printf("   Student CGPA Tracker  |  C Mini Project\n");
     printf("  =========================================\n");
 
-    /* ── PHASE 1: Bulk input ────────────────────────────── */
     inputNStudents();
-
-    /* ── PHASE 2: Post-input menu ───────────────────────── */
     int choice;
     do {
         printf("\n  ========= MENU ===========================\n");
