@@ -24,7 +24,6 @@ void clearBuf(void) {
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-/* Calculate & store CGPA using pointer (call-by-reference) */
 void calcCGPA(Student *s) {
     float pts = 0;
     int   cr  = 0, i;
@@ -35,7 +34,6 @@ void calcCGPA(Student *s) {
     s->cgpa = cr ? (pts / cr) : 0.0f;
 }
 
-/* Append one node to end of linked list */
 void appendNode(Student *node) {
     node->next = NULL;
     if (!head) { head = node; return; }
@@ -44,7 +42,6 @@ void appendNode(Student *node) {
     cur->next = node;
 }
 
-/* Print a divider */
 void divider(void) {
     printf("  ----------------------------------------\n");
 }
@@ -172,7 +169,6 @@ void menuEdit(void) {
     fgets(q, MAX_ROLL, stdin);
     q[strcspn(q, "\n")] = '\0';
 
-    /* Find student via pointer (call-by-ref style traversal) */
     Student *cur = head;
     while (cur) {
         if (strcmp(cur->rollNo, q) == 0) {
@@ -188,7 +184,7 @@ void menuEdit(void) {
                 if (cur->marks[i] > 10) cur->marks[i] = 10;
             }
 
-            calcCGPA(cur);   /* pointer updates cgpa directly */
+            calcCGPA(cur);  
             printf("  Updated CGPA: %.2f\n", cur->cgpa);
             return;
         }
@@ -200,12 +196,10 @@ void menuEdit(void) {
 void menuToppers(void) {
     if (!head) { printf("\n  No students.\n"); return; }
 
-    /* Count */
     int n = 0;
     Student *cur = head;
     while (cur) { n++; cur = cur->next; }
 
-    /* Build pointer array */
     Student **arr = (Student **)malloc(n * sizeof(Student *));
     if (!arr) { printf("  [ERROR] malloc failed.\n"); return; }
 
@@ -214,7 +208,6 @@ void menuToppers(void) {
     for (i = 0; i < n; i++, cur = cur->next)
         arr[i] = cur;
 
-    /* Bubble sort descending by cgpa */
     int j;
     for (i = 0; i < n - 1; i++) {
         for (j = 0; j < n - i - 1; j++) {
